@@ -1,0 +1,17 @@
+{
+    "name": "carme/alecaddd-plugin",
+    "description": "tutorial de creaci\u0000n de plugin con wordpress",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "carmelo",
+            "email": "carmeload@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"Inc\\":"./inc"}
+    }
+}

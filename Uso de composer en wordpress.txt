@@ -1,0 +1,77 @@
+Uso de composer en wordpress
+	para evitar el uso de los requiere_once, simplemente referenciando las clases.
+
+	Tras instalar composer en nuestro sistema, "https://getcomposer.org/" accedemos al directorio de nuestro plugin con el terminal y
+	tecleamos el siguiente comando: "composer init" que nos guiara para la creación del fichero "composer.json"
+	
+		- nos sugerirá el nombre del paquete podemos aceptarlo o cambiarlo
+		- nos pedirá una pequeña descripción
+		- nos pedirá el autor del paquete
+		- nos pedirá el tipo de paquete ( para wordpress usar: "project")
+		- nos pedirá la licencia: "GPL"
+		
+		no vamos a definir dependencias asi que diremos que no a las siguientes tres preguntas "n"
+		
+		nos mostrará la propuesta del "composer.json" y aceptaremos.
+		
+		Ahora ya tenemos creado el "composer.json" debemos modificarlo para adaptarlo a nuestro plugin, eso lo haremos con visual studio.
+		
+		el composer.json será algo así:
+		
+			{
+				"name": "carme/alecaddd-plugin",
+				"description": "tutorial de creaci\u0000n de plugin con wordpress",
+				"type": "project",
+				"license": "GPL",
+				"authors": [
+					{
+						"name": "carmelo",
+						"email": "carmeload@gmail.com"
+					}
+				],
+				"minimum-stability": "dev",
+				"require": {}
+			}
+			
+		para usar en autoload dentro de nuestro plugin
+		se añaden las siguientes lineas al composer.json:
+		 
+				"minimum-stability": "dev",
+				"require": {},
+				"autoload": {
+					"psr-4": {"Inc\\":"./inc"}
+				}
+			}
+ 
+			
+		vamos a crear nuestra autoload option para usar nuestros "namespaces" para autocargar estos ficheros sin necesidad
+		de tener que incluir requires. 
+		La directiva ps-4 hace referencia a un conjunto de reglas por convenio
+		Le decimos a composer que la referencia Inc apunta al directorio, dentro de nuestro plugin, /inc.
+		Guardamos los cambios y volvemos al terminal dentro de nuestro plugin para ejecutar el siguiente comando:
+			- composer install
+			tras varios avisos veremos que se ha ejecutado el "Generating autoload files", se ha generado el directorio "vendor" 
+			y otros ficheros necesarios.
+			
+			- En caso de modificar el "composer.json" tendremos que ejecutar la orden "composer dump-autoload" para actualizar los cambios
+			
+		Ahora tenemos que añadir el autoload a nuestro plugin, en el fichero principal añadimos la siguiente sentencia:
+		
+		Para usar clases en nuestro plugin tenemos que incluir "namespace Inc" en el fichero de la clase y ,por convenio ps4-4 ,
+		nombrar al dichero iguial que la clase:
+		
+		<?php
+			/**
+			* @package AlecaddPlugin
+			*/
+			
+			namespace Inc;
+			
+			class Activate{
+				public static function activate(){
+				flush_rewrite_rules();
+				}
+			}
+		
+		
+	
